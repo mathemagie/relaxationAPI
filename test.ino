@@ -4,7 +4,8 @@ String readstring;
 #include <PusherClient.h>
 #include <Bridge.h>
 
-int led = 9;           // the pin that the LED is attached to
+
+int led = 13;           // the pin that the LED is attached to
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 5;    // how many points to fade the LED by
 int val2;
@@ -26,22 +27,22 @@ void setup() {
      Serial.println("bind process pusher OK ");
   }
   else {
-    while(1) {}
+     Serial.println("BUGGG"); // so I can keep track of what is loaded
   }
 }
 
 
 void loop() {
    // set the brightness of pin 9:
-  analogWrite(led, brightness);    
+  //analogWrite(led, brightness);    
 
   // change the brightness for next time through the loop:
-  brightness = brightness + fadeAmount;
+  //brightness = brightness + fadeAmount;
 
   // reverse the direction of the fading at the ends of the fade: 
-  if (brightness == 0 || brightness == 255) {
-    fadeAmount = -fadeAmount ; 
-  }     
+  //if (brightness == 0 || brightness == 255) {
+    //fadeAmount = -fadeAmount ; 
+  //}     
   // wait for 30 milliseconds to see the dimming effect    
   delay(30);                
    if (client.connected()) {
@@ -55,4 +56,8 @@ void set_led(String data) {
   Serial.println(val);
   val2 = val.toInt();
   Serial.println(val2);
+  digitalWrite(led, HIGH);   // sets the LED on
+  delay(2000);                  // waits for a second
+  digitalWrite(led, LOW);    // sets the LED off
+  delay(1000);                  // waits for a sec
 }
