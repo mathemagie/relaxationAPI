@@ -21,6 +21,9 @@ PusherClient client;
 String val;
 int led = 13;           // the pin that the LED is attached to
 int val_eeg;
+int l=0;
+int j;
+int i;
 
 
 
@@ -64,10 +67,22 @@ void set_led(String data) {
   Serial.println(val);
   val_eeg = (val.toInt() * 60) / 100;
   Serial.println(val_eeg);
-   strip.setPixelColor(val_eeg, strip.Color(127,   0,   0));
-   strip.show();
-   delay(500);
-   strip.setPixelColor(val_eeg, strip.Color(0,   0,   0));
-   strip.show();
+  j = val_eeg;
+   for(i=0; i<j; i++) {
+     strip.setPixelColor(i, strip.Color(127,127, 127));
+     strip.show();
+    
+  }
+  
+  if (l != 0) {
+      for(i=j; i<61; i++) {
+         strip.setPixelColor(i, strip.Color(0, 0, 0));
+         strip.show();
+        
+      }
+    }
+  delay(1000);
+  l = j;
+  
      
 }
