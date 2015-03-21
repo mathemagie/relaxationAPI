@@ -1,4 +1,3 @@
-String readstring;
 #include <Servo.h> 
 #include <SPI.h>
 #include <PusherClient.h>
@@ -18,15 +17,13 @@ String readstring;
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, PIN, NEO_GRB + NEO_KHZ800);
 
-
+PusherClient client;
+String val;
 int led = 13;           // the pin that the LED is attached to
-int brightness = 0;    // how bright the LED is
-int fadeAmount = 5;    // how many points to fade the LED by
 int val_eeg;
 
 
-PusherClient client;
-String val;
+
 
 void setup() {
   
@@ -35,10 +32,9 @@ void setup() {
   if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
 #endif
   // End of trinket special code
-
-
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
+ 
   Serial.begin(9600);
    pinMode(led, OUTPUT);
   Bridge.begin();
@@ -56,18 +52,7 @@ void setup() {
 
 
 void loop() {
-   // set the brightness of pin 9:
-  //analogWrite(led, brightness);    
-
-  // change the brightness for next time through the loop:
-  //brightness = brightness + fadeAmount;
-
-  // reverse the direction of the fading at the ends of the fade: 
-  //if (brightness == 0 || brightness == 255) {
-    //fadeAmount = -fadeAmount ; 
-  //}     
-  // wait for 30 milliseconds to see the dimming effect    
-  delay(30);                
+   delay(30);                
    if (client.connected()) {
         client.monitor();
    }
@@ -75,7 +60,7 @@ void loop() {
 
 void set_led(String data) {
   Serial.println(data);
-   val = data.substring(30 + 33);
+   val = data.substring(30,33);
   Serial.println(val);
   val_eeg = (val.toInt() * 16) / 100;
   Serial.println(val_eeg);
