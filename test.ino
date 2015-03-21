@@ -62,7 +62,7 @@ void set_led(String data) {
   Serial.println(data);
    val = data.substring(30,33);
   Serial.println(val);
-  val_eeg = (val.toInt() * 16) / 100;
+  val_eeg = (val.toInt() * 60) / 100;
   Serial.println(val_eeg);
    strip.setPixelColor(val_eeg, strip.Color(127,   0,   0));
    strip.show();
